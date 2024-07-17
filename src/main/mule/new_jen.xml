@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="b55ad5e7-1111-4a92-b468-d6d69f4c06fd" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="new_jenFlow" doc:id="0a42311d-ff40-4ea4-a51d-ad195ad8f3b2" >
+		<http:listener doc:name="Listener" doc:id="b14a3a68-3b9f-42d2-9c12-39ab24cb9719" config-ref="HTTP_Listener_config" path="/jen"/>
+		<ee:transform doc:name="Transform Message" doc:id="9d9ba14c-1377-40bb-bfd0-4499cfa65d68" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="878a3ec8-09ed-4303-a494-6b5a534b3c9d" message="#[payload]"/>
+	</flow>
+</mule>
